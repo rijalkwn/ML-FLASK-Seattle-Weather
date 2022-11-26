@@ -14,20 +14,22 @@ app.config['UPLOAD_FOLDER'] = picFolder
 @app.route('/')
 @app.route('/index')
 def index():
-    return flask.render_template('index.html')
+    pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'images.png')
+    return flask.render_template('index.html', user_image = pic1)
 
 
 #function to predict the output
 def ValuePredictor(to_predict_list):
     to_predict = np.array(to_predict_list).reshape(1, 2)
     loaded_model = pickle.load(
-        open("./model/model.pkl", "rb"))
+        open("../model/model.pkl", "rb"))
     result = loaded_model.predict(to_predict)
     return result[0]
 
 #function to get the input from the user
 @app.route('/result', methods = ['POST'])
 def result():
+    pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'images.png')
     if request.method == 'POST':
         pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'images.png')
         precipation = request.form['precipitation']
@@ -40,7 +42,7 @@ def result():
             prediction = 'low precipitation and high temperature'
         elif int(result) == 2:
             prediction = 'high precipitation and normal temperature'
-        return render_template("result.html", prediction = prediction, user_image = pic1)
+        return render_template("result.html", prediction = prediction)
 
 if __name__ == "__main__":
     app.run(debug=True)
