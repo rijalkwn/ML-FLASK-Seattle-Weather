@@ -14,7 +14,8 @@ app.config['UPLOAD_FOLDER'] = picFolder
 @app.route('/')
 @app.route('/index')
 def index():
-    return flask.render_template('index.html')
+    picture_main = os.path.join(app.config['UPLOAD_FOLDER'], 'cloudy.png')
+    return render_template('index.html', user_image_main = picture_main)
 
 
 #function to predict the output
@@ -29,7 +30,7 @@ def ValuePredictor(to_predict_list):
 @app.route('/result', methods = ['POST'])
 def result():
     if request.method == 'POST':
-        pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'images.png')
+        picture = os.path.join(app.config['UPLOAD_FOLDER'], 'images.png')
         precipation = request.form['precipitation']
         temp_max = request.form['temp_max']
         to_predict_list = list(map(float, [precipation, temp_max]))
@@ -40,7 +41,7 @@ def result():
             prediction = 'low precipitation and high temperature'
         elif int(result) == 2:
             prediction = 'high precipitation and normal temperature'
-        return render_template("result.html", prediction=prediction, user_image = pic1)
+        return render_template("result.html", prediction=prediction, user_image = picture)
 
 if __name__ == "__main__":
     app.run(debug=True)
