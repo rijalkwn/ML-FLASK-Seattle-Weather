@@ -5,16 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootstrap -->
+    <a href="../Static/css/style.css"></a>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Seattle Weather</title>
 </head>
 <body class="bg-white">
-    <div class="container">
+    <div class="container-lg">
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
-                        <image src="images.png" alt="Seattle Skyline" class="rounded mx-auto d-block"></image>
+                        <center><img src="{{ user_image }}" alt="Mike" height="240px" width="200px"></center>
                     </div>
                 </div>
                 <div class="row">
@@ -25,17 +26,21 @@
             </div>
         </div>
         <div class="row">
-            <form class="row g-3 mx-auto">
+            <form class="row g-3 mx-auto" action="/result" method="POST">
                 <div class="col-md-6">
-                    <label for="Precipitation" class="form-label">Precipitation</label>
-                    <input type="number" class="form-control" id="Precipitation">
+                    <label for="precipitation" class="form-label">Precipitation</label>
+                    <input type="number" class="form-control" id="precipitation" name="precipitation">
                 </div>
                 <div class="col-md-6">
-                    <label for="temperaute_max" class="form-label">Max Temperaute</label>
-                    <input type="number" class="form-control" id="temperaute_max">
+                    <label for="temperature_max" class="form-label">Max Temperaute</label>
+                    <input type="number" class="form-control" id="temperature_max" name="temp_max">
                 </div>
                 <div class="g-3 mx-auto">
-                    <button class="submit btn btn-outline-primary mt-3">Submit</button>
+                    <input required
+                    class="btn btn-primary mt-3"
+                    type="submit"
+                    value="Submit"
+                  >
                 </div>
                 </form>
         </div>

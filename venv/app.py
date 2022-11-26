@@ -1,20 +1,28 @@
 import numpy as np
+import os
 import flask
 import pickle
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 
 #create instance of Flask
 app = Flask(__name__, template_folder='templates')
 
+picFolder = os.path.join('static','img')
+print(picFolder)
+app.config['UPLOAD_FOLDER'] = picFolder
+
 @app.route('/')
 @app.route('/index')
 def index():
-    return flask.render_template('index.html')
+    pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'images.png')
+    return flask.render_template('index.html', user_image = pic1)
+
 
 #function to predict the output
 def ValuePredictor(to_predict_list):
-    to_predict = np.array(to_predict_list).reshape(1, 8)
-    loaded_model = pickle.load(open("model.pkl", "rb"))
+    to_predict = np.array(to_predict_list).reshape(1, 2)
+    loaded_model = pickle.load(
+        open("./model/model.pkl", "rb"))
     result = loaded_model.predict(to_predict)
     return result[0]
 
@@ -22,21 +30,17 @@ def ValuePredictor(to_predict_list):
 @app.route('/result', methods = ['POST'])
 def result():
     if request.method == 'POST':
-        to_predict_list = request.form.to_dict()
-        to_predict_list = list(to_predict_list.values())
-        to_predict_list = list(map(int, to_predict_list))
+        precipation = request.form['precipitation']
+        temp_max = request.form['temp_max']
+        to_predict_list = list(map(float, [precipation, temp_max]))
         result = ValuePredictor(to_predict_list)
         if int(result) == 0:
-            prediction = 'Cluster 0'
+            prediction = 'low precipitation and low temperature'
         elif int(result) == 1:
-            prediction = 'Cluster 1'
+            prediction = 'low precipitation and high temperature'
         elif int(result) == 2:
-            prediction = 'Cluster 2'
-        elif int(result) == 3:
-            prediction = 'Cluster 3'
-        elif int(result) == 4:
-            prediction = 'Cluster 4'
+            prediction = 'high precipitation and normal temperature'
         return render_template("result.html", prediction = prediction)
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
