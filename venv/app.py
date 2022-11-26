@@ -41,7 +41,7 @@ def result():
             prediction = 'low precipitation and high temperature'
         elif int(result) == 2:
             prediction = 'high precipitation and normal temperature'
-        return render_template("result.html", prediction=prediction, user_image = picture)
+        return render_template("result.html", prediction=prediction, user_image_result = picture)
 
 if __name__ == "__main__":
     app.run(debug=True)
