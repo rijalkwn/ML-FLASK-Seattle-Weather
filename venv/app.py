@@ -40,11 +40,11 @@ def result():
         to_predict_list = list(map(float, [precipation, temp_min]))
         result = ValuePredictor(to_predict_list)
         if int(result) == 0:
-            prediction = 'low precipitation and low temperature'
+            prediction = 'low precipitation and low temperature (Cluster 1)'
         elif int(result) == 1:
-            prediction = 'low precipitation and high temperature'
+            prediction = 'low precipitation and high temperature (Cluster 2)'
         elif int(result) == 2:
-            prediction = 'high precipitation and normal temperature'
+            prediction = 'high precipitation and normal temperature (Cluster 3)'
         return render_template("result.html", prediction=prediction, user_image_result = picture)
 
 if __name__ == "__main__":
