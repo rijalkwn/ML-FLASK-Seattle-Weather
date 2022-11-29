@@ -7,13 +7,17 @@ from flask import Flask, request, render_template, redirect, url_for
 #create instance of Flask
 app = Flask(__name__, template_folder='templates')
 
+#picFolder
 picFolder = os.path.join('static','img')
 print(picFolder)
 app.config['UPLOAD_FOLDER'] = picFolder
 
 @app.route('/')
 @app.route('/index')
+
+#function to render the html page
 def index():
+    #upload image
     picture_main = os.path.join(app.config['UPLOAD_FOLDER'], 'cloudy.png')
     return render_template('index.html', user_image_main = picture_main)
 
@@ -32,8 +36,8 @@ def result():
     if request.method == 'POST':
         picture = os.path.join(app.config['UPLOAD_FOLDER'], 'images.png')
         precipation = request.form['precipitation']
-        temp_max = request.form['temp_max']
-        to_predict_list = list(map(float, [precipation, temp_max]))
+        temp_min = request.form['temp_min']
+        to_predict_list = list(map(float, [precipation, temp_min]))
         result = ValuePredictor(to_predict_list)
         if int(result) == 0:
             prediction = 'low precipitation and low temperature'
