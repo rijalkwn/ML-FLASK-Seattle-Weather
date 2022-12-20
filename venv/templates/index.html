@@ -56,12 +56,16 @@
 			<form id="stripe-login" action="/result" method="POST">
                 <div class="field padding-bottom--24">
                     <label for="precipitation" class="form-label">Precipitation</label>
-                    <input type="number" step="any" class="form-control" id="precipitation" name="precipitation" required>
+                    <input type="float" step="any" class="form-control" id="precipitation" name="precipitation" required>
                 </div>
                 <div class="field padding-bottom--24">
                     <label for="temp_min" class="form-label">Min Temperature</label>
-                    <input type="number" step="any" class="form-control" id="temp_min" name="temp_min" required>
+                    <input type="float" step="any" class="form-control" id="temp_min" name="temp_min" required>
                 </div>
+                <div class="field padding-bottom--24">
+                  <label for="wind" class="form-label">Wind</label>
+                  <input type="float" step="any" class="form-control" id="wind" name="wind" required>
+              </div>
                 <div class="field padding-bottom--24">
                     <input type="submit" name="submit" value="Submit">
                 </div>

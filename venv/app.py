@@ -24,9 +24,9 @@ def index():
 
 #function to predict the output
 def ValuePredictor(to_predict_list):
-    to_predict = np.array(to_predict_list).reshape(1, 2)
+    to_predict = np.array(to_predict_list).reshape(1, 3)
     loaded_model = pickle.load(
-        open("../model/model.pkl", "rb"))
+        open("./model/model.pkl", "rb"))
     result = loaded_model.predict(to_predict)
     return result[0]
 
@@ -37,14 +37,15 @@ def result():
         picture = os.path.join(app.config['UPLOAD_FOLDER'], 'images.png')
         precipation = request.form['precipitation']
         temp_min = request.form['temp_min']
-        to_predict_list = list(map(float, [precipation, temp_min]))
+        wind = request.form['wind']
+        to_predict_list = list(map(float, [precipation, temp_min, wind]))
         result = ValuePredictor(to_predict_list)
         if int(result) == 0:
-            prediction = 'low precipitation and low temperature (Cluster 1)'
+            prediction = 'low precipitation, low temperature, and high wind (Cluster 1)'
         elif int(result) == 1:
-            prediction = 'low precipitation and high temperature (Cluster 2)'
+            prediction = 'low precipitation, high temperature, and high wind (Cluster 2)'
         elif int(result) == 2:
-            prediction = 'high precipitation and normal temperature (Cluster 3)'
+            prediction = 'high precipitation, normal temperature, and low wind (Cluster 3)'
         return render_template("result.html", prediction=prediction, user_image_result = picture)
 
 if __name__ == "__main__":
