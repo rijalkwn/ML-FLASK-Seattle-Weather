@@ -45,11 +45,14 @@ def result():
         result = ValuePredictor(to_predict_list)
         if int(result) == 0:
             prediction = 'low precipitation, low temperature, and high wind (Cluster 1)'
+            weather = 'Drizzle'
         elif int(result) == 1:
-            prediction = 'low precipitation, high temperature, and high wind (Cluster 2)'
+            prediction = 'low precipitation, high temperature, and low wind (Cluster 2)'
+            weather = 'Sun'
         elif int(result) == 2:
-            prediction = 'high precipitation, normal temperature, and low wind (Cluster 3)'
-        return render_template("result.html", prediction=prediction, user_image_result = picture)
+            prediction = 'high precipitation, normal temperature, and high wind (Cluster 3)'
+            weather = 'Rain'
+        return render_template("result.html", prediction=prediction, weather=weather, user_image_result = picture)
 
 if __name__ == "__main__":
     app.run(debug=True)
