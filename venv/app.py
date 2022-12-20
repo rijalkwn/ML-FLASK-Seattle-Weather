@@ -1,3 +1,6 @@
+# Ini merupakan file yang berguna untuk mengatur web, file ini akan mengambil inputan dari file index,
+# menggunakan model.pkl dari hasil generate model.ipynb, dan menampilkan hasil ke file result.
+
 import numpy as np
 import os
 import flask
